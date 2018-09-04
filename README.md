@@ -14,7 +14,7 @@ At time of writing [Travis-CI](https://travis-ci.org/) has [support for building
  - GHC 8.0.1, GHC 8.0.2
  - GHC 8.2.1, GHC 8.2.2
  - GHC 8.4.1, GHC 8.4.2, GHC 8.4.3
- - GHC 8.6.1 *(pre-release snapshot)*
+ - GHC 8.6.1
  - GHC HEAD.
 
 Each GHC version is provided in a separate `ghc-<version>` `.deb` package installing into `/opt/ghc/<version>` (thus allowing to be installed at the same time if needed) published in a [PPA](https://launchpad.net/~hvr/+archive/ghc). The easiest way to "activate" a particular GHC version is to prepend its `bin`-folder to the `$PATH` environment variable (see example in next section).
@@ -33,6 +33,12 @@ Note: For actually enabling continuous integration for a GitHub hosted project, 
 
     ```bash
     cabal get -s haskell-ci
+    ```
+
+* Step 1.5: Install haskell-ci executable (requires `cabal-install-2.4` or later)
+
+    ```
+    cabal new-install haskell-ci:exe:haskell-ci
     ```
 
 * Step 2: Change directories to your project:
@@ -55,12 +61,11 @@ Note: For actually enabling continuous integration for a GitHub hosted project, 
 * Step 4: Generate a Travis file for your project:
 
     ```bash
-    $ # You run the following command from your project's directory, even
-    $ # though it references the script from the `haskell-ci` project
-    $ path/to/haskell-ci/make_travis_yml.hs your-project.cabal > .travis.yml
+    $ # You run the following command from your project's directory
+    $ haskell-ci --output .travis.yml your-project.cabal
     ```
     
-    The `make_travis_yml.hs` script looks at the `Tested-With` line in your
+    The `haskell-ci` executable looks at the `Tested-With` line in your
     `*.cabal` file and generates a Travis build that tests each compiler
     version you listed in parallel.
 

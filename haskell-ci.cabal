@@ -96,7 +96,7 @@ library
   if flag(ShellCheck) && impl(ghc >= 7.10 && <8.5)
     build-depends: ShellCheck == 0.5.0
 
-executable make-travis-yml
+executable haskell-ci
   main-is:             Main.hs
   ghc-options:         -Wall
   build-depends:       base, haskell-ci
